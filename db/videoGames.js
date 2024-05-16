@@ -1,9 +1,7 @@
 const client = require("./client");
 const util = require("util");
 
-const REPLACE_ME = "HELP REPLACE ME!!!!";
-
-// GET - /api/video-games - get all video games
+// GET - /api/video-games
 async function getAllVideoGames() {
   try {
     const { rows: videoGames } = await client.query(`SELECT * FROM videoGames`);
@@ -13,7 +11,7 @@ async function getAllVideoGames() {
   }
 }
 
-// GET - /api/video-games/:id - get a single video game by id
+// GET - /api/video-games/:id
 async function getVideoGameById(id) {
   try {
     const {
@@ -31,14 +29,14 @@ async function getVideoGameById(id) {
   }
 }
 
-// POST - /api/video-games - create a new video game
+// POST - /api/video-games
 async function createVideoGame(body) {
   try {
     const {
       rows: [videoGame],
     } = await client.query(
       `
-        INSERT INTO boardGames (name, description, price, "inStock", "isPopular", "imgUrl")
+        INSERT INTO videoGames (name, description, price, "inStock", "isPopular", "imgUrl")
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;`,
       [
@@ -56,7 +54,7 @@ async function createVideoGame(body) {
   }
 }
 
-// PUT - /api/video-games/:id - update a single video game by id
+// PUT - /api/video-games/:id
 async function updateVideoGame(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -81,7 +79,7 @@ async function updateVideoGame(id, fields = {}) {
   }
 }
 
-// DELETE - /api/video-games/:id - delete a single video game by id
+// DELETE - /api/video-games/:id
 async function deleteVideoGame(id) {
   try {
     const {
